@@ -1,3 +1,18 @@
+# OpenScraper Chat
+
+The team chat we host ourselves at [chat.openscraper.ai](https://chat.openscraper.ai), on our own Matrix homeserver ([Synapse](https://github.com/element-hq/synapse)).
+
+It is based on [Cinny](https://github.com/cinnyapp/cinny), the Matrix client built by the Cinny team. We only add a few small things on top, mostly AI features and handy tools. Everything else, and the credit for it, is Cinny's. Like Cinny, this repo is licensed under the AGPL-3.0.
+
+Our changes so far:
+- The login page hides the homeserver picker when the instance allows a single homeserver.
+
+Image: `ghcr.io/openscraper-ai/openscraper-chat:latest`, built from `main`. It is configured the same way as Cinny's image (`config.json`, see below).
+
+The original Cinny README follows.
+
+---
+
 # Cinny
 <p>
     <a href="https://github.com/ajbura/cinny/releases">

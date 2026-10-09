@@ -119,6 +119,10 @@ export function AuthLayout() {
     [navigate, location, discoveryState, server, discoverServer]
   );
 
+  // A single, locked homeserver leaves nothing to pick, so the picker is hidden.
+  const serverLocked =
+    !clientConfig.allowCustomHomeservers && (clientConfig.homeserverList?.length ?? 0) <= 1;
+
   const [autoDiscoveryError, autoDiscoveryInfo] =
     discoveryState.status === AsyncStatus.Success ? discoveryState.data.response : [];
 
@@ -139,17 +143,19 @@ export function AuthLayout() {
             </Box>
           </Header>
           <Box className={css.AuthCardContent} direction="Column">
-            <Box direction="Column" gap="100">
-              <Text as="label" size="L400" priority="300">
-                Homeserver
-              </Text>
-              <ServerPicker
-                server={server}
-                serverList={clientConfig.homeserverList ?? []}
-                allowCustomServer={clientConfig.allowCustomHomeservers}
-                onServerChange={selectServer}
-              />
-            </Box>
+            {!serverLocked && (
+              <Box direction="Column" gap="100">
+                <Text as="label" size="L400" priority="300">
+                  Homeserver
+                </Text>
+                <ServerPicker
+                  server={server}
+                  serverList={clientConfig.homeserverList ?? []}
+                  allowCustomServer={clientConfig.allowCustomHomeservers}
+                  onServerChange={selectServer}
+                />
+              </Box>
+            )}
             {discoveryState.status === AsyncStatus.Loading && (
               <AuthLayoutLoading message="Looking for homeserver..." />
             )}
