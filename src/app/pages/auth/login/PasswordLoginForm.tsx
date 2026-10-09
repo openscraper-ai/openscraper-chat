@@ -25,7 +25,7 @@ import { EMAIL_REGEX } from '../../../utils/regex';
 import { useAutoDiscoveryInfo } from '../../../hooks/useAutoDiscoveryInfo';
 import { AsyncStatus, useAsyncCallback } from '../../../hooks/useAsyncCallback';
 import { useAuthServer } from '../../../hooks/useAuthServer';
-import { useClientConfig } from '../../../hooks/useClientConfig';
+import { clientLockedServer, useClientConfig } from '../../../hooks/useClientConfig';
 import {
   CustomLoginResponse,
   LoginError,
@@ -141,6 +141,22 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
     const mxIdServer = getMxIdServer(mxId);
     const mxIdUsername = getMxIdLocalPart(mxId);
     if (!mxIdServer || !mxIdUsername) return;
+
+    // The user ID's domain (openscraper.ai) is not the homeserver host we are
+    // locked to (matrix.openscraper.ai): hand the full ID to that homeserver,
+    // which accepts it for its own users and rejects any other domain.
+    if (clientLockedServer(clientConfig)) {
+      startLogin(baseUrl, {
+        type: 'm.login.password',
+        identifier: {
+          type: 'm.id.user',
+          user: mxId,
+        },
+        password,
+        initial_device_display_name: 'Cinny Web',
+      });
+      return;
+    }
 
     const getBaseUrl = factoryGetBaseUrl(clientConfig, mxIdServer);
 

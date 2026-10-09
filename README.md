@@ -6,6 +6,7 @@ It is based on [Cinny](https://github.com/cinnyapp/cinny), the Matrix client bui
 
 Our changes so far:
 - The login page hides the homeserver picker when the instance allows a single homeserver.
+- With that single homeserver locked in, a full user ID (`@simon:openscraper.ai`) logs in against it, even when the ID's domain differs from the homeserver host.
 
 Image: `ghcr.io/openscraper-ai/openscraper-chat:latest`, built from `main`. It is configured the same way as Cinny's image (`config.json`, see below).
 

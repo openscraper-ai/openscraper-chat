@@ -15,6 +15,7 @@ import * as css from './styles.css';
 import * as PatternsCss from '../../styles/Patterns.css';
 import {
   clientAllowedServer,
+  clientLockedServer,
   clientDefaultServer,
   useClientConfig,
 } from '../../hooks/useClientConfig';
@@ -119,9 +120,7 @@ export function AuthLayout() {
     [navigate, location, discoveryState, server, discoverServer]
   );
 
-  // A single, locked homeserver leaves nothing to pick, so the picker is hidden.
-  const serverLocked =
-    !clientConfig.allowCustomHomeservers && (clientConfig.homeserverList?.length ?? 0) <= 1;
+  const serverLocked = clientLockedServer(clientConfig);
 
   const [autoDiscoveryError, autoDiscoveryInfo] =
     discoveryState.status === AsyncStatus.Success ? discoveryState.data.response : [];

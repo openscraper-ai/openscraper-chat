@@ -40,3 +40,7 @@ export const clientAllowedServer = (clientConfig: ClientConfig, server: string):
 
   return homeserverList?.includes(server) === true;
 };
+
+// A single homeserver with custom ones disallowed: there is nothing to pick.
+export const clientLockedServer = (clientConfig: ClientConfig): boolean =>
+  !clientConfig.allowCustomHomeservers && (clientConfig.homeserverList?.length ?? 0) <= 1;
