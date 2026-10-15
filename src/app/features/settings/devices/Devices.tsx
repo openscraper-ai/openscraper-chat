@@ -7,6 +7,7 @@ import { SettingTile } from '../../../components/setting-tile';
 import { useDeviceIds, useDeviceList, useSplitCurrentDevice } from '../../../hooks/useDeviceList';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { LocalBackup } from './LocalBackup';
+import { LinkDevice } from './LinkDevice';
 import { DeviceLogoutBtn, DeviceKeyDetails, DeviceTile, DeviceTilePlaceholder } from './DeviceTile';
 import { OtherDevices } from './OtherDevices';
 import {
@@ -112,6 +113,9 @@ export function Devices({ requestClose }: DevicesProps) {
                   />
                 </SequenceCard>
               </Box>
+              {crossSigningActive && verificationStatus === VerificationStatus.Verified && (
+                <LinkDevice />
+              )}
               <Box direction="Column" gap="100">
                 <Text size="L400">Current</Text>
                 {currentDevice ? (
