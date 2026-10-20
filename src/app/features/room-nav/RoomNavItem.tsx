@@ -245,7 +245,11 @@ function DirectPresence({ userId, children }: { userId: string; children: ReactN
 
   return (
     <AvatarPresence
-      badge={presence && <PresenceBadge presence={presence.presence} status={presence.status} />}
+      badge={
+        presence && (
+          <PresenceBadge size="200" presence={presence.presence} status={presence.status} />
+        )
+      }
     >
       {children}
     </AvatarPresence>
