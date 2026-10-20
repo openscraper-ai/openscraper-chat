@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactNode, forwardRef, useState } from 'react';
+import React, { MouseEventHandler, forwardRef, useState } from 'react';
 import { Room } from 'matrix-js-sdk';
 import {
   Avatar,
@@ -38,8 +38,7 @@ import { TypingIndicator } from '../../components/typing-indicator';
 import { stopPropagation } from '../../utils/keyboard';
 import { getMatrixToRoom } from '../../plugins/matrix-to';
 import { getCanonicalAliasOrRoomId, guessDmRoomUserId, isRoomAlias } from '../../utils/matrix';
-import { AvatarPresence, PresenceBadge } from '../../components/presence';
-import { useUserPresence } from '../../hooks/useUserPresence';
+import { UserAvatarPresence } from '../../components/presence';
 import { getViaServers } from '../../plugins/via-servers';
 import { useMediaAuthentication } from '../../hooks/useMediaAuthentication';
 import { useSetting } from '../../state/hooks/settings';
@@ -239,23 +238,6 @@ function CallChatToggle() {
   );
 }
 
-// The other person's presence dot over a direct message's avatar.
-function DirectPresence({ userId, children }: { userId: string; children: ReactNode }) {
-  const presence = useUserPresence(userId);
-
-  return (
-    <AvatarPresence
-      badge={
-        presence && (
-          <PresenceBadge size="200" presence={presence.presence} status={presence.status} />
-        )
-      }
-    >
-      {children}
-    </AvatarPresence>
-  );
-}
-
 type RoomNavItemProps = {
   room: Room;
   selected: boolean;
@@ -383,7 +365,7 @@ export function RoomNavItem({
         <NavItemContent>
           <Box as="span" grow="Yes" alignItems="Center" gap="200">
             {directUserId ? (
-              <DirectPresence userId={directUserId}>{avatar}</DirectPresence>
+              <UserAvatarPresence userId={directUserId}>{avatar}</UserAvatarPresence>
             ) : (
               avatar
             )}

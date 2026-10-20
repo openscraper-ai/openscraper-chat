@@ -12,7 +12,7 @@ import {
 } from 'folds';
 import React, { ReactNode, useId } from 'react';
 import * as css from './styles.css';
-import { Presence, usePresenceLabel } from '../../hooks/useUserPresence';
+import { Presence, usePresenceLabel, useUserPresence } from '../../hooks/useUserPresence';
 
 const PresenceToColor: Record<Presence, MainColor> = {
   [Presence.Online]: 'Success',
@@ -78,3 +78,20 @@ export const AvatarPresence = as<'div', AvatarPresenceProps>(
     </Box>
   )
 );
+
+// A user's presence dot over their avatar; renders the avatar alone until their presence is known.
+export function UserAvatarPresence({ userId, children }: { userId: string; children: ReactNode }) {
+  const presence = useUserPresence(userId);
+
+  return (
+    <AvatarPresence
+      badge={
+        presence && (
+          <PresenceBadge size="200" presence={presence.presence} status={presence.status} />
+        )
+      }
+    >
+      {children}
+    </AvatarPresence>
+  );
+}

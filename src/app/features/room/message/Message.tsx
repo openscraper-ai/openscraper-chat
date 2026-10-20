@@ -46,6 +46,7 @@ import {
   Username,
   UsernameBold,
 } from '../../../components/message';
+import { UserAvatarPresence } from '../../../components/presence';
 import {
   canEditEvent,
   getEventEdits,
@@ -792,24 +793,27 @@ export const Message = as<'div', MessageProps>(
       <AvatarBase
         className={messageLayout === MessageLayout.Bubble ? css.BubbleAvatarBase : undefined}
       >
-        <Avatar
-          className={css.MessageAvatar}
-          as="button"
-          size="300"
-          data-user-id={senderId}
-          onClick={onUserClick}
-        >
-          <UserAvatar
-            userId={senderId}
-            src={
-              senderAvatarMxc
-                ? mxcUrlToHttp(mx, senderAvatarMxc, useAuthentication, 48, 48, 'crop') ?? undefined
-                : undefined
-            }
-            alt={senderDisplayName}
-            renderFallback={() => <Icon size="200" src={Icons.User} filled />}
-          />
-        </Avatar>
+        <UserAvatarPresence userId={senderId}>
+          <Avatar
+            className={css.MessageAvatar}
+            as="button"
+            size="300"
+            data-user-id={senderId}
+            onClick={onUserClick}
+          >
+            <UserAvatar
+              userId={senderId}
+              src={
+                senderAvatarMxc
+                  ? mxcUrlToHttp(mx, senderAvatarMxc, useAuthentication, 48, 48, 'crop') ??
+                    undefined
+                  : undefined
+              }
+              alt={senderDisplayName}
+              renderFallback={() => <Icon size="200" src={Icons.User} filled />}
+            />
+          </Avatar>
+        </UserAvatarPresence>
       </AvatarBase>
     );
 
