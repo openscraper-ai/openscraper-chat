@@ -9,6 +9,7 @@ Our changes so far:
 - With that single homeserver locked in, a full user ID (`@simon:openscraper.ai`) logs in against it, even when the ID's domain differs from the homeserver host.
 - Settings > Devices > Link new device: shows a QR code that a phone app (e.g. Element X) scans to sign in, then hands it this device's encryption secrets (MSC4108, needs a homeserver with MAS and `msc4108_enabled`).
 - Presence dot (active, busy, away) on direct message avatars in the sidebar and on message avatars in the timeline, as the profile card already had.
+- Ticks on your own messages, as on WhatsApp: clock while sending, one tick once sent, two coloured ticks once every other member has read it (Matrix has no delivery receipt, so no "received" step); a warning icon if sending failed.
 
 Image: `ghcr.io/openscraper-ai/openscraper-chat:latest`, built from `main`. It is configured the same way as Cinny's image (`config.json`, see below).
 

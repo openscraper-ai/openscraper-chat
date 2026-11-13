@@ -47,6 +47,7 @@ import {
   UsernameBold,
 } from '../../../components/message';
 import { UserAvatarPresence } from '../../../components/presence';
+import { MessageStatus } from './MessageStatus';
 import {
   canEditEvent,
   getEventEdits,
@@ -877,11 +878,13 @@ export const Message = as<'div', MessageProps>(
     };
 
     const isThreadedMessage = mEvent.threadRootId !== undefined;
+    const own = senderId === mx.getUserId();
 
     return (
       <MessageBase
         className={classNames(css.MessageBase, className, {
           [css.MessageBaseBubbleCollapsed]: messageLayout === MessageLayout.Bubble && collapse,
+          [css.MessageBaseOwn]: own,
         })}
         tabIndex={0}
         space={messageSpacing}
@@ -893,6 +896,7 @@ export const Message = as<'div', MessageProps>(
         {...focusWithinProps}
         ref={ref}
       >
+        {own && <MessageStatus room={room} mEvent={mEvent} myUserId={senderId} />}
         {!edit && (hover || !!menuAnchor || !!emojiBoardAnchor) && (
           <div className={css.MessageOptionsBase}>
             <Menu className={css.MessageOptionsBar} variant="SurfaceVariant">
